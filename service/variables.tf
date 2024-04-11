@@ -1,5 +1,6 @@
 variable "env" {
-  type = string
+  type    = string
+  default = "service"
 }
 
 variable "project_name" {
