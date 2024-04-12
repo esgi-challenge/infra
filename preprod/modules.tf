@@ -16,9 +16,10 @@ module "storage" {
 module "database" {
   source = "../modules/database"
 
-  env          = var.env
-  project_name = var.project_name
-  vpc_id       = module.vpc.vpc_id
+  env           = var.env
+  project_name  = var.project_name
+  vpc_id        = module.vpc.vpc_id
+  vpc_self_link = module.vpc.vpc_self_link
 
   depends_on = [module.vpc]
 }

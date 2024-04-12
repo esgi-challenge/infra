@@ -11,6 +11,10 @@ variable "vpc_id" {
   type = string
 }
 
+variable "vpc_self_link" {
+  type = string
+}
+
 variable "user" {
   type      = map(string)
   sensitive = true

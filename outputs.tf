@@ -16,3 +16,12 @@ output "preprod" {
 
   description = "Preprod outputs"
 }
+
+output "service" {
+  value = {
+    vpc_name          = module.service.vpc_name
+    bastion_public_ip = module.service.bastion_public_ip
+  }
+
+  description = "Service outputs"
+}
