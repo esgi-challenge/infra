@@ -23,3 +23,17 @@ module "database" {
 
   depends_on = [module.vpc]
 }
+
+module "bastion" {
+  source = "../modules/compute"
+
+  env            = var.env
+  project_name   = var.project_name
+  ssh_ip_allowed = ["0.0.0.0/0"]
+  vpc_name       = module.vpc.vpc_name
+  subnet_name    = module.vpc.subnet_name
+  zone           = "europe-west1-d"
+  machine_type   = "e2-micro"
+
+  depends_on = [module.vpc]
+}

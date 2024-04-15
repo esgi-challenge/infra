@@ -1,6 +1,6 @@
 resource "google_compute_firewall" "allow_ssh" {
   name      = "${var.project_name}-${var.env}-allow-ssh"
-  network   = module.vpc.vpc_name
+  network   = var.vpc_name
   direction = "INGRESS"
 
   allow {
@@ -9,22 +9,27 @@ resource "google_compute_firewall" "allow_ssh" {
   }
 
   target_tags   = ["ssh-enabled"]
-  source_ranges = ["0.0.0.0/0"]
+  source_ranges = var.ssh_ip_allowed
 }
+
+data "google_compute_default_service_account" "default" {}
 
 resource "google_compute_address" "public_ip_address" {
   name = "${var.project_name}-${var.env}-public-ip"
 }
 
-data "google_compute_default_service_account" "default" {}
-
 resource "google_compute_instance" "bastion" {
-  name         = "${var.project_name}-${var.env}-bastion"
-  machine_type = "e2-micro"
-  zone         = "europe-west1-b"
+  name                      = "${var.project_name}-${var.env}-bastion"
+  machine_type              = var.machine_type
+  zone                      = var.zone
   allow_stopping_for_update = true
 
   tags = ["ssh-enabled"]
+
+  metadata_startup_script = <<-EOF
+  sudo apt update -y
+  sudo apt install -y postgresql-client
+  EOF
 
   boot_disk {
     initialize_params {
@@ -33,8 +38,8 @@ resource "google_compute_instance" "bastion" {
   }
 
   network_interface {
-    network    = module.vpc.vpc_name
-    subnetwork = module.vpc.subnet_name
+    network    = var.vpc_name
+    subnetwork = var.subnet_name
 
     access_config {
       nat_ip = google_compute_address.public_ip_address.address
@@ -45,6 +50,4 @@ resource "google_compute_instance" "bastion" {
     email  = data.google_compute_default_service_account.default.email
     scopes = ["cloud-platform"]
   }
-
-  depends_on = [google_compute_address.public_ip_address]
 }

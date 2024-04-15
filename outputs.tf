@@ -9,9 +9,10 @@ output "prod" {
 
 output "preprod" {
   value = {
-    vpc_name      = module.preprod.vpc_name
-    bucket_url    = module.preprod.bucket_url
-    db_private_ip = module.preprod.db_private_ip
+    vpc_name           = module.preprod.vpc_name
+    bucket_url         = module.preprod.bucket_url
+    db_private_ip      = module.preprod.db_private_ip
+    bastion_private_ip = module.preprod.bastion_private_ip
   }
 
   description = "Preprod outputs"
@@ -19,8 +20,8 @@ output "preprod" {
 
 output "service" {
   value = {
-    vpc_name          = module.service.vpc_name
-    bastion_public_ip = module.service.bastion_public_ip
+    vpc_name = module.service.vpc_name
+    # bastion_public_ip = module.service.bastion_public_ip
   }
 
   description = "Service outputs"

@@ -24,7 +24,7 @@ resource "google_sql_user" "db_user" {
 }
 
 resource "google_sql_database" "challenge_database" {
-  name     = var.project_name
+  name     = "${var.project_name}-${var.env}"
   instance = google_sql_database_instance.database.name
 }
 

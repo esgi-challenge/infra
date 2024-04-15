@@ -13,3 +13,7 @@ output "bucket_url" {
 output "db_private_ip" {
   value = module.database.db_private_ip
 }
+
+output "bastion_private_ip" {
+  value = module.bastion.vm_private_ip
+}
