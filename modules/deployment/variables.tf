@@ -1,6 +1,5 @@
 variable "env" {
-  type    = string
-  default = "preprod"
+  type = string
 }
 
 variable "project_name" {

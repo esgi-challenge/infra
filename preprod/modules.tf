@@ -37,3 +37,11 @@ module "bastion" {
 
   depends_on = [module.vpc]
 }
+
+module "deployments" {
+  source = "../modules/deployment"
+
+  env          = var.env
+  project_name = var.project_name
+  artifact_url = var.artifact_url
+}

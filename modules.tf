@@ -10,6 +10,8 @@ module "prod" {
 
   env          = "prod"
   project_name = var.project_name
+
+  depends_on = [module.service]
 }
 
 module "preprod" {
@@ -17,4 +19,7 @@ module "preprod" {
 
   env          = "preprod"
   project_name = var.project_name
+  artifact_url = module.service.artifact_url
+
+  depends_on = [module.service]
 }

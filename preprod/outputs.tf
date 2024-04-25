@@ -17,3 +17,7 @@ output "db_private_ip" {
 output "bastion_private_ip" {
   value = module.bastion.vm_private_ip
 }
+
+output "cloud_run_backend_uri" {
+  value = module.deployments.cloud_run_backend_uri
+}

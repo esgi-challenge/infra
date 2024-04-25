@@ -1,6 +1,15 @@
 resource "google_artifact_registry_repository" "repository" {
   repository_id = "${var.project_name}-${var.env}-repository"
   format        = "DOCKER"
+
+  cleanup_policy_dry_run = false
+  cleanup_policies {
+    id     = "Keep newer versions"
+    action = "KEEP"
+    most_recent_versions {
+      keep_count = 4
+    }
+  }
 }
 
 # resource "google_compute_firewall" "allow_ssh" {
