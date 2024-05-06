@@ -24,9 +24,5 @@ variable "subnet_name" {
 }
 
 variable "env_variables" {
-  # type = list(object({
-  #   name  = string
-  #   value = string
-  # }))
   type = map(string)
 }

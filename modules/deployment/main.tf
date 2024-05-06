@@ -16,31 +16,6 @@ resource "google_cloud_run_v2_service" "backend" {
         }
       }
 
-      # env {
-      #   name  = "APP_ENV"
-      #   value = upper(var.env)
-      # }
-
-      # env {
-      #   name  = "API_PORT"
-      #   value = "8080"
-      # }
-
-      # env {
-      #   name  = "BASE_URL"
-      #   value = "0.0.0.0"
-      # }
-
-      # env {
-      #   name = "PG_HOST"
-      #   value = var.db_private_ip
-      # }
-
-      # env {
-      #   name = "PG_PORT"
-      #   value = "5432"
-      # }
-
       volume_mounts {
         name       = "cloudsql"
         mount_path = "/cloudsql"

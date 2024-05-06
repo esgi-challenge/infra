@@ -57,35 +57,4 @@ module "deployments" {
     "PG_PASSWORD" = module.database.db_user.password
     "PG_DBNAME"   = module.database.pg_db_name
   }
-
-  # env_variables = [
-  #   {
-  #     name  = "APP_ENV"
-  #     value = upper(var.env)
-  #   },
-  #   {
-  #     name  = "API_PORT"
-  #     value = "8080"
-  #   },
-  #   {
-  #     name  = "BASE_URL"
-  #     value = "0.0.0.0"
-  #   },
-  #   {
-  #     name  = "PG_HOST"
-  #     value = module.database.db_private_ip
-  #   },
-  #   {
-  #     name  = "PG_PORT"
-  #     value = "5432"
-  #   },
-  #   {
-  #     name  = "PG_USER"
-  #     value = module.database.db_user.name
-  #   },
-  #   {
-  #     name  = "PG_PASSWORD"
-  #     value = module.database.db_user.password
-  #   },
-  # ]
 }
