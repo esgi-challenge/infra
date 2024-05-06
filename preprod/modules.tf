@@ -41,7 +41,8 @@ module "bastion" {
 module "deployments" {
   source = "../modules/deployment"
 
-  env          = var.env
-  project_name = var.project_name
-  artifact_url = var.artifact_url
+  env               = var.env
+  project_name      = var.project_name
+  artifact_url      = var.artifact_url
+  cloud_sql_db_name = module.database.db_connection
 }

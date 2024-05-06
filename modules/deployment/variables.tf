@@ -10,3 +10,7 @@ variable "project_name" {
 variable "artifact_url" {
   type = string
 }
+
+variable "cloud_sql_db_name" {
+  type = string
+}
