@@ -7,20 +7,39 @@ resource "google_cloud_run_v2_service" "backend" {
     containers {
       image = "${var.artifact_url}/backend-${var.env}:latest"
 
-      env {
-        name  = "APP_ENV"
-        value = upper(var.env)
+      dynamic "env" {
+        for_each = var.env_variables
+
+        content {
+          name  = env.key
+          value = env.value
+        }
       }
 
-      env {
-        name  = "API_PORT"
-        value = "8080"
-      }
+      # env {
+      #   name  = "APP_ENV"
+      #   value = upper(var.env)
+      # }
 
-      env {
-        name  = "BASE_URL"
-        value = "0.0.0.0"
-      }
+      # env {
+      #   name  = "API_PORT"
+      #   value = "8080"
+      # }
+
+      # env {
+      #   name  = "BASE_URL"
+      #   value = "0.0.0.0"
+      # }
+
+      # env {
+      #   name = "PG_HOST"
+      #   value = var.db_private_ip
+      # }
+
+      # env {
+      #   name = "PG_PORT"
+      #   value = "5432"
+      # }
 
       volume_mounts {
         name       = "cloudsql"
@@ -31,7 +50,14 @@ resource "google_cloud_run_v2_service" "backend" {
     volumes {
       name = "cloudsql"
       cloud_sql_instance {
-        instances = [var.cloud_sql_db_name]
+        instances = [var.db_connection]
+      }
+    }
+
+    vpc_access {
+      network_interfaces {
+        network    = var.vpc_name
+        subnetwork = var.subnet_name
       }
     }
   }

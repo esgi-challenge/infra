@@ -41,8 +41,51 @@ module "bastion" {
 module "deployments" {
   source = "../modules/deployment"
 
-  env               = var.env
-  project_name      = var.project_name
-  artifact_url      = var.artifact_url
-  cloud_sql_db_name = module.database.db_connection
+  env           = var.env
+  project_name  = var.project_name
+  artifact_url  = var.artifact_url
+  db_connection = module.database.db_connection
+  vpc_name      = module.vpc.vpc_name
+  subnet_name   = module.vpc.subnet_name
+  env_variables = {
+    "APP_ENV"     = upper(var.env)
+    "API_PORT"    = "8080"
+    "BASE_URL"    = "0.0.0.0"
+    "PG_HOST"     = module.database.db_private_ip
+    "PG_PORT"     = "5432"
+    "PG_USER"     = module.database.db_user.name
+    "PG_PASSWORD" = module.database.db_user.password
+    "PG_DBNAME"   = module.database.pg_db_name
+  }
+
+  # env_variables = [
+  #   {
+  #     name  = "APP_ENV"
+  #     value = upper(var.env)
+  #   },
+  #   {
+  #     name  = "API_PORT"
+  #     value = "8080"
+  #   },
+  #   {
+  #     name  = "BASE_URL"
+  #     value = "0.0.0.0"
+  #   },
+  #   {
+  #     name  = "PG_HOST"
+  #     value = module.database.db_private_ip
+  #   },
+  #   {
+  #     name  = "PG_PORT"
+  #     value = "5432"
+  #   },
+  #   {
+  #     name  = "PG_USER"
+  #     value = module.database.db_user.name
+  #   },
+  #   {
+  #     name  = "PG_PASSWORD"
+  #     value = module.database.db_user.password
+  #   },
+  # ]
 }
