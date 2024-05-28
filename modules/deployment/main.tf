@@ -38,8 +38,26 @@ resource "google_cloud_run_v2_service" "backend" {
   }
 }
 
-resource "google_cloud_run_service_iam_binding" "all_user" {
+resource "google_cloud_run_v2_service" "web" {
+  name     = "${var.project_name}-${var.env}-web"
+  location = "europe-west1"
+  ingress  = "INGRESS_TRAFFIC_ALL"
+
+  template {
+    containers {
+      image = "${var.artifact_url}/web-${var.env}:latest"
+    }
+  }
+}
+
+resource "google_cloud_run_service_iam_binding" "all_user_backend" {
   service = google_cloud_run_v2_service.backend.name
+  role    = "roles/run.invoker"
+  members = ["allUsers"]
+}
+
+resource "google_cloud_run_service_iam_binding" "all_user_web" {
+  service = google_cloud_run_v2_service.web.name
   role    = "roles/run.invoker"
   members = ["allUsers"]
 }

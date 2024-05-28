@@ -56,5 +56,7 @@ module "deployments" {
     "PG_USER"     = module.database.db_user.name
     "PG_PASSWORD" = module.database.db_user.password
     "PG_DBNAME"   = module.database.pg_db_name
+    "GIN_MODE"    = "release"
+    "JWT_TOKEN"   = "xxxxxxxxxxxxxxxx"
   }
 }
