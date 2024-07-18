@@ -21,7 +21,7 @@ variable "user" {
 
   default = {
     name     = "admin"
-    password = "admin"
+    password = var.password
   }
 }
 
